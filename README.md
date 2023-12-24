@@ -44,8 +44,8 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/news-portal.git
-    cd news-portal
+    git clone https://github.com/Thecaracter/inertia_laravel_react.git
+    cd inertia_laravel_react
     ```
 
 2. **Setup Frontend:**
