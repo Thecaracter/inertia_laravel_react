@@ -1,7 +1,7 @@
-const Table_Dashboard = ({ news }) => {
+const Table_Dashboard = ({ news, onEdit, onDelete }) => {
     return (
         <div className="overflow-x-auto">
-            <table className="table table-zebra">
+            <table className="table table-small table-pin-rows table-pin-cols">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -9,6 +9,7 @@ const Table_Dashboard = ({ news }) => {
                         <th>Description</th>
                         <th>Category</th>
                         <th>Author</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,11 +20,15 @@ const Table_Dashboard = ({ news }) => {
                             <td>{item.description}</td>
                             <td>{item.category}</td>
                             <td>{item.author}</td>
+                            <td>
+                                <button onClick={() => onEdit(item)} className="btn btn-outline btn-warning">Edit</button>
+                                <button onClick={() => onDelete(item.id)} className="btn btn-outline btn-error">Error</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-        </div>
+        </div >
     );
 };
 
