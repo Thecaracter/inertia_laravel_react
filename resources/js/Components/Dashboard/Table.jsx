@@ -21,8 +21,8 @@ const Table_Dashboard = ({ news, onEdit, onDelete }) => {
                             <td>{item.category}</td>
                             <td>{item.author}</td>
                             <td>
-                                <button onClick={() => onEdit(item)} className="btn btn-outline btn-warning">Edit</button>
-                                <button onClick={() => onDelete(item.id)} className="btn btn-outline btn-error">Error</button>
+                                <button onClick={() => onEdit(item)} className="btn btn-outline btn-warning m-2">Edit</button>
+                                <button onClick={() => onDelete(item.id)} className="btn btn-outline btn-error m-2">Delete</button>
                             </td>
                         </tr>
                     ))}
