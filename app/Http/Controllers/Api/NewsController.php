@@ -35,5 +35,42 @@ class NewsController extends Controller
             return response()->json(['message' => 'Internal Server Error', 'error' => $e->getMessage()], 500);
         }
     }
+    public function destroy($id)
+    {
+        try {
+            // Cari berita berdasarkan ID
+            $news = News::findOrFail($id);
+
+            // Simpan path foto sebelum menghapus berita
+            $photoPath = $news->image;
+
+            // Proses "delete"
+            $news->delete();
+
+            // Hapus foto dari direktori jika foto ada
+            if (!empty($photoPath)) {
+                $filePath = public_path($photoPath);
+
+                if (file_exists($filePath)) {
+                    // Menggunakan fungsi unlink untuk menghapus file
+                    if (unlink($filePath)) {
+                        // Jika berhasil dihapus
+                        error_log('File deleted successfully: ' . $filePath);
+                    } else {
+                        // Jika gagal dihapus
+                        error_log('Failed to delete file: ' . $filePath);
+                    }
+                } else {
+                    // Jika file tidak ditemukan
+                    error_log('File not found: ' . $filePath);
+                }
+            }
+
+            return response()->json(['message' => 'News deleted successfully']);
+        } catch (\Exception $e) {
+            // Tangani error internal server atau berita tidak ditemukan
+            return response()->json(['message' => 'Error deleting news', 'error' => $e->getMessage()], 500);
+        }
+    }
 
 }

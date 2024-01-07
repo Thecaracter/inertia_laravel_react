@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import axios from 'axios';
 import Table_Dashboard from '@/Components/Dashboard/Table';
+import Swal from 'sweetalert2';
 
 export default function Dashboard({ auth, news }) {
 
@@ -46,68 +47,90 @@ export default function Dashboard({ auth, news }) {
                 },
             });
 
-            // Handle success, e.g., show a success message, redirect, etc.
-            console.log('News created successfully');
+            // Tampilkan SweetAlert untuk sukses
+            const result = await Swal.fire({
+                icon: 'success',
+                title: 'News created successfully',
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+            });
+
+            // Jika tombol konfirmasi diklik, lakukan reload halaman
+
+            window.location.reload();
+
         } catch (error) {
-            // Handle error, e.g., show an error message
-            console.error('Error creating news:', error.response.data);
+            // Tampilkan SweetAlert untuk kesalahan
+            Swal.fire({
+                icon: 'error',
+                title: 'Error creating news',
+                text: error.response.data,
+            });
         }
     };
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">News</h2>}
         >
-            <Head title="Dashboard" />
+            <Head title="News" />
 
-            <div className="py-12">
+            <div className="py-12 p-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            name="title"
-                            placeholder="title"
-                            className="input input-ghost w-full max-w-xs m-2"
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="description"
-                            className="input input-ghost w-full max-w-xs m-2"
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="category"
-                            placeholder="category"
-                            className="input input-ghost w-full max-w-xs m-2"
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="author"
-                            placeholder="author"
-                            className="input input-ghost w-full max-w-xs m-2"
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="file"
-                            name="image"
-                            className="file-input file-input-bordered w-full max-w-xs m-2"
-                            onChange={handleFileChange}
-                        />
-                        <br />
-                        <button type="submit" className="btn btn-outline">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="mb-2">
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Title"
+                                className="input input-ghost w-full"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <input
+                                type="text"
+                                name="description"
+                                placeholder="Description"
+                                className="input input-ghost w-full"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <input
+                                type="text"
+                                name="category"
+                                placeholder="Category"
+                                className="input input-ghost w-full"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <input
+                                type="text"
+                                name="author"
+                                placeholder="Author"
+                                className="input input-ghost w-full"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <input
+                                type="file"
+                                name="image"
+                                className="file-input file-input-bordered w-full"
+                                onChange={handleFileChange}
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-outline w-full sm:col-span-2">
                             Submit
                         </button>
                     </form>
                 </div>
+                <br></br>
                 <div><Table_Dashboard news={news} /></div>
-
             </div>
-
         </AuthenticatedLayout>
     );
 }

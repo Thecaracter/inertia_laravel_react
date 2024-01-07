@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/news', [NewsController::class, 'store']);
+Route::delete('/news/{id}', [NewsController::class, 'destroy']);
